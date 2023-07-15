@@ -3,7 +3,8 @@
 #include <bitwise.h>
 
 // For Arduino Nano - PB5(D13)
-const int PIN_PB5 = 5;
+#define PIN_PB5 5
+
 const int LED_PIN = PIN_PB5;
 
 int main(void)

@@ -1,7 +1,7 @@
 /**
  * Пример для Arduino Nano.
  * Мигаем светодиодом на пине D13 (PB5) с интервалом в 1 секунду.
-*/
+ */
 
 #include <avr/io.h>
 #include <util/delay.h>

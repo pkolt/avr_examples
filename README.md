@@ -3,6 +3,7 @@
 ## Сборник примеров программ для AVR:
 
 - [Blink](./src/main-blink.c)
+- [Timer/Counter0](./src/main-timer0.c)
 
 ## Базовая информация (ATmega328P)
 

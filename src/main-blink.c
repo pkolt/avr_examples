@@ -1,11 +1,13 @@
+/**
+ * Пример для Arduino Nano.
+ * Мигаем светодиодом на пине D13 (PB5) с интервалом в 1 секунду.
+*/
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include <bitwise.h>
 
-// For Arduino Nano - PB5(D13)
-#define PIN_PB5 5
-
-const int LED_PIN = PIN_PB5;
+#define LED_PIN 5 // PB5(D13)
 
 int main(void)
 {

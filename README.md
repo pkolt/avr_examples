@@ -5,6 +5,7 @@
 - [Blink](./src/main-blink.c)
 - [Timer/Counter0](./src/main-timer0.c)
 - [Timer/Counter1](./src/main-timer1.c)
+- [Timer/Counter1 Interrupt](./src/main-timer1-interrupt.c)
 
 ## Базовая информация (ATmega328P)
 

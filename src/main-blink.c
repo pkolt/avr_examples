@@ -5,7 +5,7 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
-#include <bitwise.h>
+#include "bitwise.h"
 
 #define LED_PIN 5 // PB5(D13)
 

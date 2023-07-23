@@ -6,6 +6,7 @@
 - [Timer/Counter0](./src/main-timer0.c)
 - [Timer/Counter1](./src/main-timer1.c)
 - [Timer/Counter1 Interrupt](./src/main-timer1-interrupt.c)
+- [Sleep modes](./src/main-sleep.c)
 
 ## Базовая информация (ATmega328P)
 

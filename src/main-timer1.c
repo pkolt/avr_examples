@@ -27,7 +27,7 @@
 
 int main(void)
 {
-    set_bit(DDRB, LED_PIN); // настройка PB5 на выход
+    set_bit(DDRB, LED_PIN); // Настройка PB5 на выход
 
     // Настройка делителя (TCCR1B - Timer/Counter1 Control Register B)
     // Задаем prescaler = 256

@@ -8,6 +8,7 @@
 - [Timer/Counter1 Interrupt](./src/main-timer1-interrupt.c)
 - [Sleep modes](./src/main-sleep.c)
 - [Watchdog Timer + Sleep](./src/main-wdt-sleep.c)
+- [Watchdog Timer](./src/main-wdt.c)
 
 ## Базовая информация (ATmega328P)
 

@@ -52,7 +52,8 @@ int main(void)
 
     cli(); // Запретить глобальные прерывания
 
-    wdt_reset();
+    // Для Arduino Nano, Arduino Pro Mini не получиться использовать функцию wdt_enable(WDTO_4S) из-за проблем с bootloader
+    // https://github.com/arduino/ArduinoCore-avr/issues/150
 
     // WDTCSR - Watchdog Timer Control Register
     // Инициируем изменение параметров сторожевого таймера.
@@ -60,15 +61,16 @@ int main(void)
     // Биты нужно проставить одной командой в течение следующих 4 тактов (тут немного заморочено, делать нужно именно так).
     WDTCSR = (1 << WDIE) | (0 << WDE) | (1 << WDP3); // Прерывание от Watchdog Timer через каждые 4 секунды (без Reset)
 
-    sei(); // Разрешить глобальные прерывания
-
     while (1)
     {
-        wdt_reset();
+        sei();       // Разрешить глобальные прерывания
+        wdt_reset(); // Сброс Watchdog Timer.  Это заставляет Watchdog Timer начать отсчет с нуля
         set_sleep_mode(SLEEP_MODE_PWR_DOWN);
         sleep_mode();
 
         // <-- Попадем в это место при выходе из спящего режима
+
+        cli(); // Запретить глобальные прерывания (Чтобы не сработали прерывания пока будет мигать светодиод)
 
         blink_led(3, 1000);
     }

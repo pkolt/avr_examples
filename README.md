@@ -11,6 +11,7 @@
 - [Watchdog Timer](./src/main-wdt.c)
 - [EEPROM](./src/main-eeprom.c)
 - [External Interrupt](./src/main-external-interrupt.c)
+- [External Pin Change Interrupt](./src/main-external-interrupt-pin-change.c)
 
 ## Базовая информация (ATmega328P)
 

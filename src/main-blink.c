@@ -6,17 +6,14 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
-#include "bitwise.h"
 
-#define LED_PIN 5 // PB5(D13)
+#define LED_PIN PB5 // PB5(D13)
 
-int main(void)
-{
-  set_bit(DDRB, LED_PIN); // Настройка PB5 на выход
+int main(void) {
+  DDRB |= (1<<PB5); // Настройка PB5 на выход
 
-  while (1)
-  {
-    invert_bit(PORTB, LED_PIN); // Инвертируем напряжение на PB5
-    _delay_ms(1000);
+  while (1) {
+    PORTB ^= (1<<LED_PIN); // Инвертируем напряжение на PB5
+    _delay_ms(1000); // Задержка в 1 секунду
   }
 }

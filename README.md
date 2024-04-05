@@ -3,9 +3,10 @@
 ## Сборник примеров программ для AVR:
 
 - [Blink](./src/main-blink.c)
-- [Timer/Counter0](./src/main-timer0.c)
-- [Timer/Counter1](./src/main-timer1.c)
-- [Timer/Counter1 Interrupt](./src/main-timer1-interrupt.c)
+- [Timer0 normal mode](./src/main-timer0-normal.c)
+- [Timer0 CTC mode](./src/main-timer0-ctc.c)
+- [Timer1](./src/main-timer1.c)
+- [Timer1 Interrupt](./src/main-timer1-interrupt.c)
 - [Sleep modes](./src/main-sleep.c)
 - [Watchdog Timer + Sleep](./src/main-wdt-sleep.c)
 - [Watchdog Timer](./src/main-wdt.c)

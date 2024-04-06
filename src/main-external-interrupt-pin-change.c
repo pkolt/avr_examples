@@ -16,7 +16,6 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <stdbool.h>
-#include "bitwise.h"
 
 #define LED_PIN PB5 // D13
 #define BUTTON_PIN PB0 // PCINT0/PB0 (D8)
@@ -28,21 +27,20 @@ ISR(PCINT0_vect) {
   is_interrupt_button = true;
 }
 
-int main(void)
-{
-  set_bit(DDRB, LED_PIN); // Настройка PB5 на выход
+int main(void) {
+  DDRB |= (1<<LED_PIN); // Настройка PB5 на выход
 
-  clear_bit(DDRB, BUTTON_PIN); // Настройка PCINT0/PB0 (D8) на вход
-  set_bit(PORTB, BUTTON_PIN); // Подтягиваем пин PCINT0/PB0 (D8) к HIGH через встроенный резистор
+  // Настройка PCINT0/PB0 (D8) на вход не требуется (значение по умолчанию), регистр DDRB
+  PORTB |= (1<<BUTTON_PIN);  // Подтягиваем пин PCINT0/PB0 (D8) к HIGH через встроенный резистор
 
-  set_bit(PCICR, PCIE0); // Разрешить прерывания на группе контактов PCIE0
-  set_bit(PCMSK0, PCINT0); // Разрешить прерывание на PCINT0
+  PCICR |= (1<<PCIE0); // Разрешить прерывания на группе контактов PCIE0
+  PCMSK0 |= (1<<PCINT0); // Разрешить прерывание на PCINT0
 
   sei(); // Включить глобальные прерывания
 
   while (1) {
     if (is_interrupt_button) {
-      invert_bit(PORTB, LED_PIN); // Меняем значение на противоположное
+      PORTB ^= (1<<LED_PIN); // Меняем значение на противоположное
       _delay_ms(1000); // Для борьбы с дребезгом кнопки
       sei(); // Включить глобальные прерывания
       is_interrupt_button = false;

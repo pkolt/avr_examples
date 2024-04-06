@@ -12,9 +12,8 @@
 #include <avr/eeprom.h>
 #include <util/delay.h>
 #include <stdint.h>
-#include "bitwise.h"
 
-#define LED_PIN 5 // PB5(D13)
+#define LED_PIN PB5 // PB5(D13)
 
 // Переменная размещается в EEPROM памяти
 // Переменной задается значение по умолчанию. Все значения по умолчанию для переменных EEPROM хранятся в файле .eep
@@ -23,7 +22,7 @@ uint8_t EEMEM eemem_var = 1;
 
 int main(void)
 {
-  set_bit(DDRB, LED_PIN); // Настройка PB5 на выход
+  DDRB |= (1<<LED_PIN); // Настройка PB5 на выход
 
   uint8_t byte_value = 0;
   uint16_t word_value = 0;
@@ -38,9 +37,9 @@ int main(void)
   eemem_value = eeprom_read_byte(&eemem_var); // Читаем значение переменной
 
   if (byte_value > 0) {
-    set_bit(PORTB, LED_PIN);
+    PORTB |= (1<<LED_PIN);
   } else {
-    clear_bit(PORTB, LED_PIN);
+    PORTB &= ~(1<<LED_PIN);
   }
 
   while (1) {}

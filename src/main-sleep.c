@@ -9,25 +9,22 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #include <util/delay.h>
-#include "bitwise.h"
 
-#define LED_PIN 5       // PB5(D13)
-#define INTERRUPT_PIN 2 // INT0/PD2(D2)
+#define LED_PIN PB5       // PB5(D13)
+#define INTERRUPT_PIN PD2 // INT0/PD2(D2)
 
-int main(void)
-{
-    set_bit(DDRB, LED_PIN); // Настройка PB5 на выход
+int main(void) {
+    DDRB |= (1<<LED_PIN); // Настройка PB5 на выход
 
-    clear_bit(DDRD, INTERRUPT_PIN); // Настройка PD2 на вход (т.к. там кнопка)
-    set_bit(PORTD, INTERRUPT_PIN);  // Подтягиваем PD2 к high
+    // Настройка PD2 на вход не требуется (значение по умолчанию), регистр DDRD
+    PORTD |= (1<<INTERRUPT_PIN);  // Подтягиваем PD2 к high
 
     // EICRA - External Interrupt Control Register A
     // Прерывание на INT0/PD2 будет сгенерировано при низком уровне (low)
-    clear_bit(EICRA, ISC01);
-    clear_bit(EICRA, ISC00);
+    // ISC01=0, ISC00=0
 
     // EIMSK - External Interrupt Mask Register
-    set_bit(EIMSK, INT0); // Включить внешнее прерывание на INT0
+    EIMSK |= (1<<INT0); // Включить внешнее прерывание на INT0
 
     // BOD - это аббревиатура от Brown-Out Detection.
     // Это функция, которая защищает микроконтроллер от повреждения из-за пониженного напряжения питания.
@@ -58,9 +55,9 @@ int main(void)
 
         for (int i = 0; i < 3; i++)
         {
-            set_bit(PORTB, LED_PIN); // Включить светодиод на PB5
+            PORTB |= (1<<LED_PIN); // Включить светодиод на PB5
             _delay_ms(1000);
-            clear_bit(PORTB, LED_PIN); // Выключить светодиод на PB5
+            PORTB &= ~(1<<LED_PIN); // Выключить светодиод на PB5
             _delay_ms(1000);
         }
     }

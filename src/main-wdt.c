@@ -23,18 +23,16 @@
 #include <avr/wdt.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
-#include "bitwise.h"
 
-#define LED_PIN 5 // PB5(D13)
+#define LED_PIN PB5 // PB5(D13)
 
-int main(void)
-{
-    set_bit(DDRB, LED_PIN); // Настройка PB5 на выход
+int main(void) {
+    DDRB |= (1<<LED_PIN); // Настройка PB5 на выход
 
     // Мигаем светодиодом
-    set_bit(PORTB, LED_PIN);
+    PORTB |= (1<<LED_PIN);
     _delay_ms(1000);
-    clear_bit(PORTB, LED_PIN);
+    PORTB &= ~(1<<LED_PIN);
 
     // Для Arduino Nano, Arduino Pro Mini не получиться использовать функцию wdt_enable(WDTO_4S) из-за проблем с bootloader
     // https://github.com/arduino/ArduinoCore-avr/issues/150
@@ -46,7 +44,5 @@ int main(void)
 
     wdt_disable(); // Выключаем Watchdog Timer
 
-    while (1)
-    {
-    }
+    while (1) {}
 }

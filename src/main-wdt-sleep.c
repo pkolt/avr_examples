@@ -22,31 +22,26 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #include <util/delay.h>
-#include "bitwise.h"
 
-#define LED_PIN 5 // PB5(D13)
+#define LED_PIN PB5 // PB5(D13)
 
-void blink_led(int count, int timeout_ms)
-{
-    for (int i = 0; i < count; i++)
-    {
-        set_bit(PORTB, LED_PIN); // Включить светодиод на PB5
+void blink_led(int count, int timeout_ms) {
+    for (int i = 0; i < count; i++) {
+        PORTB |= (1<<LED_PIN); // Включить светодиод на PB5
         _delay_ms(timeout_ms);
-        clear_bit(PORTB, LED_PIN); // Выключить светодиод на PB5
-        if (i < count - 1)
-        {
+        PORTB &= ~(1<<LED_PIN); // Выключить светодиод на PB5
+        if (i < count - 1) {
             _delay_ms(timeout_ms);
         }
     }
 }
 
-ISR(WDT_vect)
-{ // Не будет прерывания от Watchdog Timer если убрать этот обработчик прерывания (будет Reset)
+ISR(WDT_vect) { 
+// Не будет прерывания от Watchdog Timer если убрать этот обработчик прерывания (будет Reset)
 }
 
-int main(void)
-{
-    set_bit(DDRB, LED_PIN); // Настройка PB5 на выход
+int main(void) {
+    DDRB |= (1<<LED_PIN); // Настройка PB5 на выход
 
     blink_led(3, 100);
 

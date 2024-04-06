@@ -6,7 +6,6 @@
 - [Timer0 normal mode](./src/main-timer0-normal.c)
 - [Timer0 CTC mode](./src/main-timer0-ctc.c)
 - [Timer1](./src/main-timer1.c)
-- [Timer1 Interrupt](./src/main-timer1-interrupt.c)
 - [Sleep modes](./src/main-sleep.c)
 - [Watchdog Timer + Sleep](./src/main-wdt-sleep.c)
 - [Watchdog Timer](./src/main-wdt.c)
@@ -14,6 +13,8 @@
 - [External Interrupt](./src/main-external-interrupt.c)
 - [External Pin Change Interrupt](./src/main-external-interrupt-pin-change.c)
 - [Analog to Digital Converter](./src/main-adc.c)
+- [Fast PWM](./src/main-pwm-fast.c)
+- [Phase correct PWM](./src/main-pwm-phase-correct.c)
 
 ## Базовая информация (ATmega328P)
 

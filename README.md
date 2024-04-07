@@ -15,6 +15,7 @@
 - [Analog to Digital Converter](./src/main-adc.c)
 - [Fast PWM](./src/main-pwm-fast.c)
 - [Phase correct PWM](./src/main-pwm-phase-correct.c)
+- [Traffic light](./src/main-traffic-light.c)
 
 ## Базовая информация (ATmega328P)
 

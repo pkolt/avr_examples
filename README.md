@@ -3,6 +3,7 @@
 ## Сборник примеров программ для AVR:
 
 - [Blink](./src/main-blink.c)
+- [Blink Timer](./src/main-blink-timer.c)
 - [Timer0 normal mode](./src/main-timer0-normal.c)
 - [Timer0 CTC mode](./src/main-timer0-ctc.c)
 - [Timer1](./src/main-timer1.c)

@@ -10,10 +10,10 @@
 #define LED_PIN PB5 // PB5(D13)
 
 int main(void) {
-  DDRB |= (1<<PB5); // Настройка PB5 на выход
+  DDRB |= (1<<LED_PIN); // Настройка LED_PIN на выход
 
   while (1) {
-    PORTB ^= (1<<LED_PIN); // Инвертируем напряжение на PB5
+    PORTB ^= (1<<LED_PIN); // Инвертируем напряжение на LED_PIN
     _delay_ms(1000); // Задержка в 1 секунду
   }
 }

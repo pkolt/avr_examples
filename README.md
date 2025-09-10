@@ -17,6 +17,7 @@
 - [Fast PWM](./src/main-pwm-fast.c)
 - [Phase correct PWM](./src/main-pwm-phase-correct.c)
 - [Traffic light](./src/main-traffic-light.c)
+- [IR Receiver](./src/main-ir-receiver.c)
 
 ## Базовая информация (ATmega328P)
 

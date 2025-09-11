@@ -64,18 +64,14 @@
 volatile uint16_t ir_last_capture = 0;
 volatile uint8_t ir_counter = 0;
 volatile uint8_t ir_address = 0;
-volatile uint8_t ir_address_inv = 0;
 volatile uint8_t ir_command = 0;
-volatile uint8_t ir_command_inv = 0;
 volatile bool ir_finished = false;
 
 void ir_reset() {
   ir_last_capture = 0;
   ir_counter = 0;
   ir_address = 0;
-  ir_address_inv = 0;
   ir_command = 0;
-  ir_command_inv = 0;
   ir_finished = false;
 
   // Захват по падающему фронту (ICES1 = 0) для обнаружения стартового импульса.
@@ -136,16 +132,25 @@ ISR(TIMER1_CAPT_vect) {
         bool is_bit_1 = is_duration_match(duration_ticks, TICKS_1690US, TOLERANCE_BIT + 150); // Увеличим допуск для '1'
 
         if (is_bit_0 || is_bit_1) {
-          if (is_bit_1) {
-            uint8_t bit_index = (ir_counter - 4) / 2;
-            if (bit_index < 8) { // Адрес
-              ir_address |= (1 << bit_index);
-            } else if (bit_index < 16) { // Инвертированный адрес
-              ir_address_inv |= (1 << (bit_index - 8));
-            } else if (bit_index < 24) { // Команда
-              ir_command |= (1 << (bit_index - 16));
-            } else { // Инвертированная команда (bit_index < 32)
-              ir_command_inv |= (1 << (bit_index - 24));
+          uint8_t bit_index = (ir_counter - 4) / 2;
+
+          if (bit_index < 8) { // Адрес
+            if (is_bit_1) ir_address |= (1 << bit_index);
+          } else if (bit_index < 16) { // Инвертированный адрес
+            uint8_t original_bit_index = bit_index - 8;
+            bool original_bit_is_1 = (ir_address >> original_bit_index) & 1;
+            if (is_bit_1 == original_bit_is_1) {
+              ir_reset();
+              return; // Ошибка: бит не инвертирован
+            }
+          } else if (bit_index < 24) { // Команда
+            if (is_bit_1) ir_command |= (1 << (bit_index - 16));
+          } else { // Инвертированная команда (bit_index < 32)
+            uint8_t original_bit_index = bit_index - 24;
+            bool original_bit_is_1 = (ir_command >> original_bit_index) & 1;
+            if (is_bit_1 == original_bit_is_1) {
+              ir_reset();
+              return; // Ошибка: бит не инвертирован
             }
           }
           ir_next_edge(current_capture);
@@ -196,12 +201,10 @@ int main(void) {
 
   while (1) {
     if (ir_finished) {
-      // Проверяем, что инвертированные байты соответствуют оригинальным
-      if (ir_address == (uint8_t)~ir_address_inv && ir_command == (uint8_t)~ir_command_inv) {
-        // Если адрес 0x00 и команда 0x45 (кнопка Power на многих пультах)
-        if (ir_address == 0x00 && ir_command == 0x45) {
-          led_invert();
-        }
+      // Проверка инвертированных байтов теперь выполняется в прерывании.
+      // Если адрес 0x00 и команда 0x45 (кнопка Power на многих пультах)
+      if (ir_address == 0x00 && ir_command == 0x45) {
+        led_invert();
       }
       
       // Сбрасываем состояние для приема следующей команды

@@ -113,6 +113,7 @@ int main(void) {
 
   while (1) {
 
+    // Бежим по счетчику от 0 до 255, далее от 255 до 0
     if (direction) {
       if (counter < 255) {
         counter++;
@@ -127,8 +128,13 @@ int main(void) {
       }
     }
 
-    set_led_value(pgm_read_byte(&brightness_table[counter]));
+    // Значение яркости берем из таблицы (чтобы переходы между уровнями яркости воспринимались более естественно)
+    uint8_t brightness = pgm_read_byte(&brightness_table[counter]);
 
+    // Устанавливаем значение свечения светодиода от 0 до 255
+    set_led_value(brightness);
+
+    // Небольшая задержка чтобы светодиод не мигал слишком быстро
     _delay_ms(10);
   }
 }
